@@ -10,8 +10,8 @@ int main(int argc, char** argv)
 	char str[80],
 	     str1[40],
 	     str2[40],
+	     posSpace[40],
 	     c;
-	char *posSpace;
 	int  qtLinhas = 0,
 	     nrLinhaAtual = 0,
 	     idStatus = 1,
