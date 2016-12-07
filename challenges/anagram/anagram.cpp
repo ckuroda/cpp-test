@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 			return -1;
 		} else {
 			// arquivo aberto ok - leitura de linha
-			fgets(str);
+			fgets(str,80,fp);
 			// leitura do nro de linhas
 			try {
 				qtLinhas = atoi(str);
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
 			// leitura do arquivo
 			while (!feof(fp) && (nrLinhaAtual < qtLinhas) && idStatus) {
 				// leitura de linha
-				fgets(str);
+				fgets(str,80,fp);
 				nrLinhaAtual++;
 				// localiza divisao de palavras
 				posSpace = strchr(str,' ');
