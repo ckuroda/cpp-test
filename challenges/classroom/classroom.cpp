@@ -9,7 +9,8 @@
 int main(int argc, char** argv)
 {
 	// declaracao de variaveis
-	FILE *fp;
+	FILE *fp,
+	     *fout;
 	char str[80],
 	     str1[40],
              str2[40],
@@ -28,7 +29,7 @@ int main(int argc, char** argv)
 	
 	if (argc == 2) {
 		// parametros ok
-		if ((fp=fopen(argv[1],"r")) == NULL) {
+		if ((fp=fopen(argv[1],"r")) != NULL && (fout=fopen("saida.txt","w")) != NULL) {
 			// abre arquivo ok
 			fgets(str);
 			try {
@@ -97,7 +98,8 @@ int main(int argc, char** argv)
 								if (ind > (idPeople+1)) {
 									printf("Indice nao encontrado.");
 								} else {
-									printf("pessoa encontrada");
+									// grava pessoa localizada em arq out
+									fputs(sPeople[ind]);
 								}
 							}
 							break;
@@ -117,6 +119,8 @@ int main(int argc, char** argv)
 			} else {
 				return -1;
 			}
+			fclose(fp);
+			fclose(fout);
 		} else {
 			// falha em abertura de arquivo
 			return -1;
