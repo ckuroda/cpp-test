@@ -3,7 +3,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
 int main(int argc, char** argv)
 {
 	// declaracao de variaveis
@@ -14,8 +13,7 @@ int main(int argc, char** argv)
 	     fields[100][10][255],
 	     sOut[255];
 	int  idField,
-	     nrTamStr,
-	     nrTamNextStr,
+	     nrTamStr,	     nrTamNextStr,
 	     nrLine;
 	
 	if (argc != 3) {
@@ -57,7 +55,17 @@ int main(int argc, char** argv)
 				nrLine++;
 			}		
 			// gera saida registro a registro
-			for (i=0;i<=idField;i++) {
+			for (i=0;i<nrLine;i++) {
+				// monta saida
+				strcat(sOut,fields[i][0]);
+				strcat(sOut," is ");
+				strcat(sOut,fields[i][4]);
+				strcat(sOut," years old and lives in ");
+				strcat(sOut,fields[i][2]);
+				strcat(sOut,", ");
+				strcat(sOut,fields[i][1]);
+				// grava saida
+				fputs(sOut,fout);
 			}
 			fclose(fp);
 			fclose(fout);
