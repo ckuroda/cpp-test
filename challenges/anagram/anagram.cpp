@@ -76,15 +76,15 @@ int main(int argc, char** argv)
 							} while (nrAlteracao > 0);
 							if (strcmp(str1,str2) == 0) {
 								// anagrama ok
-								printf("As string sao anagramas");
+								printf("%s is an anagram of %s",str1,str2);
 							} else {
 								// nao eh anagrama
-								printf("As string %s e %s nao sao anagramas",str1,str2);
+								printf("%s is an anagram of $s",str1,str2);
 							}
 								
 						} else {
 							// nao eh anagrama
-							printf("As strings %s e %s nao sao anagramas",str1,str2);
+							printf("%s is not an anagram of %s",str1,str2);
 						}
 					} else {
 						// nao ha duas palavras na linha
