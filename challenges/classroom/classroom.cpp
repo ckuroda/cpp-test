@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 		// parametros ok
 		if ((fp=fopen(argv[1],"r")) != NULL && (fout=fopen("saida.txt","w")) != NULL) {
 			// abre arquivo ok
-			fgets(str);
+			fgets(str,80,fp);
 			try {
 				qtQuestion = atoi(str);
 			} catch (int e) {
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
 			}
 			while (!feof(fp) && (nrQuestion < qtQuestion) && idOk) {
 				// novo questionamento
-				fgets(str);
+				fgets(str,80,fp);
 				posSpace = strchr(str,' ');
 				nrTamStr = strlen(str);
 				nrTamStr2 = strlen(posSpace) - 1;
@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 						case 1:
 							// insert pessoas
 							for (i=0;i<idQuestionQtde;i++) {
-								fgets(str);
+								fgets(str,80,fp);
 								idPeople++;
 								strcat(sPeople[idPeople],str);
 								;
@@ -88,7 +88,7 @@ int main(int argc, char** argv)
 						case 2:
 							// pesquisa n posicoes
 							for (i3=0;i3<idQuestionQtde;i3++) {
-								fgets(str);
+								fgets(str,80,fp);
 								try {
 									ind = atoi(str);
 								} catch (int e) {
@@ -99,7 +99,7 @@ int main(int argc, char** argv)
 									printf("Indice nao encontrado.");
 								} else {
 									// grava pessoa localizada em arq out
-									fputs(sPeople[ind]);
+									fputs(sPeople[ind],fout);
 								}
 							}
 							break;
