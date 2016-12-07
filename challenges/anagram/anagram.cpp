@@ -5,7 +5,8 @@
 int main(int argc, char** argv)
 {
 	// declaracao de variaveis
-	FILE *fp;
+	FILE *fp,
+	     *fout;
 	char str[80],
 	     str1[40],
 	     str2[40],
@@ -22,7 +23,7 @@ int main(int argc, char** argv)
 	// valida parametros main
 	if (argc == 2) {
 		// trata arquivo
-		if ((fp=fopen(argv[1],"r")) == NULL) {
+		if ((fp=fopen(argv[1],"r")) == NULL || (fout=fopen("saida.txt","w")) == NULL) {
 			// problemas no arquivo
 			printf("Erro na abertura do arquivo.");
 			return -1;
@@ -78,15 +79,21 @@ int main(int argc, char** argv)
 							} while (nrAlteracao > 0);
 							if (strcmp(str1,str2) == 0) {
 								// anagrama ok
-								printf("%s is an anagram of %s",str1,str2);
+								strcat(str1," is an anagram of ");
+								strcat(str1,str2);
+								fputs(str1,fout);
 							} else {
 								// nao eh anagrama
-								printf("%s is an anagram of $s",str1,str2);
+								strcat(str1," is not an anagram of ");
+								strcat(str1,str2);
+								fputs(str1,fout);
 							}
 								
 						} else {
 							// nao eh anagrama
-							printf("%s is not an anagram of %s",str1,str2);
+							strcat(str1," is not an anagram of ");
+							strcat(str1,str2);
+							fputs(str1,fout);
 						}
 					} else {
 						// nao ha duas palavras na linha
@@ -97,6 +104,7 @@ int main(int argc, char** argv)
 			}
 			// fecha arquivo
 			fclose(fp);
+			fclose(fout);
 			return 0;
 		}
 	} else {
