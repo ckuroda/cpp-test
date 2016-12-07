@@ -25,6 +25,7 @@ int main(int argc, char** argv)
 		if ((fp=fopen(argv[1],"r")) == NULL) {
 			// problemas no arquivo
 			printf("Erro na abertura do arquivo.");
+			return -1;
 		} else {
 			// arquivo aberto ok - leitura de linha
 			fgets(str);
@@ -36,7 +37,7 @@ int main(int argc, char** argv)
 				return e;
 			}
 			// leitura do arquivo
-			while (!feof(fp) and (nrLinhaAtual < qtLinhas) and idStatus) {
+			while (!feof(fp) && (nrLinhaAtual < qtLinhas) && idStatus) {
 				// leitura de linha
 				fgets(str);
 				nrLinhaAtual++;
