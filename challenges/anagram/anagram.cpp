@@ -6,11 +6,18 @@ int main(int argc, char** argv)
 {
 	// declaracao de variaveis
 	FILE *fp;
-	char str[80];
+	char str[80],
+	     str1[40],
+	     str2[40],
+	     c;
+	char *posSpace;
 	int  qtLinhas = 0,
 	     nrLinhaAtual = 0,
-             posSpace = 0,
-	     idStatus = 1;
+	     idStatus = 1,
+             nrTamStr,
+	     nrTamStr1,
+	     nrTamStr2,
+	     nrAlteracao = 0;
 	
 	// valida parametros main
 	if (argc == 2) {
@@ -35,12 +42,55 @@ int main(int argc, char** argv)
 				nrLinhaAtual++;
 				// localiza divisao de palavras
 				posSpace = strchr(str,' ');
-				if (posSpace == 0) {
+				if (posSpace == NULL) {
 					// erro na linha
 					printf("Conteudo invalido no arquivo.");
 					idStatus = 0;
 				} else {
 					// trata linha
+					nrTamStr = strlen(str);
+					nrTamStr2 = strlen(posSpace) - 1;
+					nrTamStr1 = nrTamStr - nrTamStr2 - 1;
+					strncpy(str1,str,nrTamStr1);
+					if (nrTamStr2 > 0) {
+						// duas palavras na linha
+						strncpy(str1,str,nrTamStr1);
+						strncpy(str2,posSpace+1,nrTamStr2);
+						if (nrTamStr1 == nrTamStr2) {
+							// possivel anagrama
+							do {
+								for (i=0;i<nrTamStr1-1;i++) {
+									if (str1[i] > str1[i+1]) {
+										c = str1[i];
+										str1[i] = str1[i+1];
+										str1[i+1] = c;
+										nrAlteracao++;
+									}
+									if (str2[i] > str2[i+1]) {
+										c = str2[i];
+										str2[i] = str2[i+1];
+										str2[i+1] = c;
+										nrAlteracao++;
+									}
+								}
+							} while (nrAlteracao > 0);
+							if (strcmp(str1,str2) == 0) {
+								// anagrama ok
+								printf("As string sao anagramas");
+							} else {
+								// nao eh anagrama
+								printf("As string %s e %s nao sao anagramas",str1,str2);
+							}
+								
+						} else {
+							// nao eh anagrama
+							printf("As strings %s e %s nao sao anagramas",str1,str2);
+						}
+					} else {
+						// nao ha duas palavras na linha
+						printf("Conteudo invalido no arquivo");
+						idStatus = 0;
+					}
 				}
 			}
 			// fecha arquivo
