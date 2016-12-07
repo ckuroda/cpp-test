@@ -82,9 +82,24 @@ int main(int argc, char** argv)
 										}
 									}
 								}
-							} while (nrAlteracao > 0);
+							} while (nrAlteracao);
 							break;
 						case 2:
+							// pesquisa n posicoes
+							for (i3=0;i3<idQuestionQtde;i3++) {
+								fgets(str);
+								try {
+									ind = atoi(str);
+								} catch (int e) {
+									cout << "Indice invalido. Exception nr. " << e << '\n';
+								}
+								// pesquisa em sPeople
+								if (ind > (idPeople+1)) {
+									printf("Indice nao encontrado.");
+								} else {
+									printf("pessoa encontrada");
+								}
+							}
 							break;
 						default:
 							printf("Tipo de questionamento invalido.");
