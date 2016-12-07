@@ -14,9 +14,9 @@ int main(int argc, char** argv)
 	char str[80],
 	     str1[40],
              str2[40],
+	     posSpace[40],
              sPeople[100][80],
 	     strTmp[80];
-	char *posSpace;
 	int  qtQuestion = 0,
 	     nrQuestion = 0,
 	     nrTamStr = 0,
