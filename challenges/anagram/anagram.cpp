@@ -59,6 +59,7 @@ int main(int argc, char** argv)
 						if (nrTamStr1 == nrTamStr2) {
 							// possivel anagrama
 							do {
+								nrAlteracao = 0;
 								for (i=0;i<nrTamStr1-1;i++) {
 									if (str1[i] > str1[i+1]) {
 										c = str1[i];
