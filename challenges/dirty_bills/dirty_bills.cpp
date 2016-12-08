@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 
@@ -8,7 +9,9 @@ int main(int argc, char** argv)
 	     *fout;
 	char str[80],
 	     sStr2[80],
-	     sNewStr[40];
+	     sNewStr[40],
+	     sOut[80],
+	     sTmp[80];
 	int  qtLinhas = 0,
 	     idLinha,
 	     nrTamStr,
@@ -60,7 +63,7 @@ int main(int argc, char** argv)
 			itoa(qtDirtyTotal,sTmp,10);
 			strcat(sOut,sTmp);
 			strcat(sOut," dirty bills");
-			fputs();
+			fputs(sOut,fout);
 			fclose(fp);
 			fclose(fout);
 			return 0;
