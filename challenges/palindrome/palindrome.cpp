@@ -45,7 +45,21 @@ int main(int argc, char** argv)
 }
 
 int isPalindrome (char *s) {
+	char sAux[80];
+	int  nrTamS=0;
+	
+	nrTamS = strlen(s);
+	//sAux recebe inverso de s
+	for (i=nrTamS-1;i>=0;i--) {
+		strcat(sAux,s[i]);
+	}
+	return (!strcmp(s,sAux));
 }
 	
 char *setMessage (char *s) {
+	char sAux[80];
+	
+	strcat(sAux,s);
+	strcat(sAux," is a palindrome");
+	return sAux;
 }
