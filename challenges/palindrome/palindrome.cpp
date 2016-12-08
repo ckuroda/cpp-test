@@ -60,6 +60,6 @@ char *setMessage (char *s) {
 	char sAux[80];
 	
 	strcat(sAux,s);
-	strcat(sAux," is a palindrome");
+	strcat(sAux," is palindrome");
 	return sAux;
 }
