@@ -56,9 +56,10 @@ int main(int argc, char** argv)
 				idLinha++;
 			}
 			// gera saida
-			strcat(sOut,"x ");
+			strcat(sOut,"There are ");
 			itoa(qtDirtyTotal,sTmp,10);
 			strcat(sOut,sTmp);
+			strcat(sOut," dirty bills");
 			fputs();
 			fclose(fp);
 			fclose(fout);
