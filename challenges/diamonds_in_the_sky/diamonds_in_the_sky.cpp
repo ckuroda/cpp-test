@@ -2,7 +2,7 @@
 
 class Sky
 {
-public:
+protected:
 	Sky(int stars = 0)
 		: m_stars(stars)
 	{}
@@ -36,14 +36,14 @@ public:
 		: Sky(stars)
 	{}
 };
-
+// PROIBIDO ALTERAR
 class BlueNightSky : public BlueSky, public NightSky
 {
 public:
 	BlueNightSky()
 	{}
 };
-
+// PROIBIDO ALTERAR
 void readInput(NightSky& nightSky)
 {
 	int n = 0;
@@ -51,12 +51,12 @@ void readInput(NightSky& nightSky)
 
 	nightSky.stars(n);
 }
-
+// PROIBIDO ALTERAR
 int getAmountOfStars(const BlueSky& blueSky)
 {
 	return blueSky.stars();
 }
-
+// PROIBIDO ALTERAR
 int main(int argc, char** argv)
 {
 	BlueNightSky blueNightSky;
