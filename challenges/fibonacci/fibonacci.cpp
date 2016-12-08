@@ -35,11 +35,18 @@ int main(int argc, char** argv)
 				cout << "Indice invalido. Exception nr. " << e << '\n';
 				return -1;
 			}
-			// calcula fibonacci
-			for (i=3;i<=nrIndice;i++) {
-				nrSoma = nr1+nr2;
-				nr1 = nr2;
-				nr2 = nrSoma;
+			switch (nrIndice) {
+				case 1: nrSoma = 0;
+					break;
+				case 2: nrSoma = 1;
+					break;
+				default:
+					// calcula fibonacci
+					for (i=1;i<nrIndice;i++) {
+						nrSoma = nr1+nr2;
+						nr1 = nr2;
+						nr2 = nrSoma;
+					}
 			}
 			// gera saida
 			try {
