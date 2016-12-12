@@ -2,114 +2,131 @@
 #include <algorithm>
 #include <string>
 
+#define OK 0
+#define MAX_WORD 80
+
+char *rowScan (char *s1, char *s2);
+void strSort (char *s1, char *s2, int nSize);
+void setMsg (char *s1, char *s2, int isNotAnagram);
+void x_strcat (char *dest, char *orig, int size);
+
 int main(int argc, char** argv)
 {
-	// declaracao de variaveis
-	FILE *fp,
-	     *fout;
-	char str[80],
-	     str1[40],
-	     str2[40],
-	     posSpace[40],
-	     c;
-	int  qtLinhas = 0,
-	     nrLinhaAtual = 0,
-	     idStatus = 1,
-             nrTamStr,
-	     nrTamStr1,
-	     nrTamStr2,
-	     nrAlteracao = 0;
+	char sRow1[MAX_WORD],
+             sRow2[MAX_WORD],
+             *sReturn;
+	int  nRows = 0,
+	     nActualRow = 0;
 	
-	// valida parametros main
-	if (argc == 2) {
-		// trata arquivo
-		if ((fp=fopen(argv[1],"r")) == NULL || (fout=fopen("saida.txt","w")) == NULL) {
-			// problemas no arquivo
-			printf("Erro na abertura do arquivo.");
-			return -1;
-		} else {
-			// arquivo aberto ok - leitura de linha
-			fgets(str,80,fp);
-			// leitura do nro de linhas
-			try {
-				qtLinhas = atoi(str);
-			} catch (int e) {
-				cout << "Erro na leitura do nro de linhas. Exception Nr. " << e << '\n';
-				return e;
-			}
-			// leitura do arquivo
-			while (!feof(fp) && (nrLinhaAtual < qtLinhas) && idStatus) {
-				// leitura de linha
-				fgets(str,80,fp);
-				nrLinhaAtual++;
-				// localiza divisao de palavras
-				posSpace = strchr(str,' ');
-				if (posSpace == NULL) {
-					// erro na linha
-					printf("Conteudo invalido no arquivo.");
-					idStatus = 0;
-				} else {
-					// trata linha
-					nrTamStr = strlen(str);
-					nrTamStr2 = strlen(posSpace) - 1;
-					nrTamStr1 = nrTamStr - nrTamStr2 - 1;
-					strncpy(str1,str,nrTamStr1);
-					if (nrTamStr2 > 0) {
-						// duas palavras na linha
-						strncpy(str1,str,nrTamStr1);
-						strncpy(str2,posSpace+1,nrTamStr2);
-						if (nrTamStr1 == nrTamStr2) {
-							// possivel anagrama
-							do {
-								nrAlteracao = 0;
-								for (i=0;i<nrTamStr1-1;i++) {
-									if (str1[i] > str1[i+1]) {
-										c = str1[i];
-										str1[i] = str1[i+1];
-										str1[i+1] = c;
-										nrAlteracao++;
-									}
-									if (str2[i] > str2[i+1]) {
-										c = str2[i];
-										str2[i] = str2[i+1];
-										str2[i+1] = c;
-										nrAlteracao++;
-									}
-								}
-							} while (nrAlteracao > 0);
-							if (strcmp(str1,str2) == 0) {
-								// anagrama ok
-								strcat(str1," is an anagram of ");
-								strcat(str1,str2);
-								fputs(str1,fout);
-							} else {
-								// nao eh anagrama
-								strcat(str1," is not an anagram of ");
-								strcat(str1,str2);
-								fputs(str1,fout);
-							}
-								
-						} else {
-							// nao eh anagrama
-							strcat(str1," is not an anagram of ");
-							strcat(str1,str2);
-							fputs(str1,fout);
-						}
-					} else {
-						// nao ha duas palavras na linha
-						printf("Conteudo invalido no arquivo");
-						idStatus = 0;
-					}
-				}
-			}
-			// fecha arquivo
-			fclose(fp);
-			fclose(fout);
-			return 0;
-		}
-	} else {
-		// erro de parametro main
-		printf("Favor digitar o nome do arquivo de entrada.");
-		return -1;
+	// open file ok
+	std::cin >> sRow1;
+	// row 1
+	try {
+		nRows = atoi(sRow1);
+	} catch (int e) {
+		// Erro na leitura do nro de linhas
+		return e;
 	}
+
+	// file scan
+	while ((nActualRow < nRows)) {
+		// row scan
+		std::cin >> sRow1;
+		std::cin >> sRow2;
+		nActualRow++;
+
+		// row rules
+		sReturn = rowScan(sRow1,sRow2);
+
+		// set output
+		std::cout << sReturn << std::endl;								
+		}
+
+	return OK;
+}
+
+char *rowScan (char *s1, char *s2) {
+	// vars
+	int  idCmp;
+	char sTmp1[MAX_WORD]="",
+             sTmp2[MAX_WORD]="";
+
+	if (strlen(s1) == strlen(s2)) {
+		// same words size
+		x_strcat(sTmp1,s1,MAX_WORD);
+		x_strcat(sTmp2,s2,MAX_WORD);
+
+		// sort words
+		strSort(sTmp1,sTmp2,(int) strlen(sTmp1));
+		
+		// singular word check
+		idCmp = strcmp(sTmp1,sTmp2);
+		
+	} else {
+		// negative anagram
+		idCmp = 1;
+	}
+
+	setMsg(s1,s2,idCmp);
+	return s1;
+}
+
+void strSort (char *s1, char *s2, int nSize) {
+	// vars
+	int nChange = 0;
+	char c;
+
+	do {
+		nChange = 0;
+		// word1 and word2 scan
+		for (int i=0;i<nSize-1;i++) {
+
+			if (s1[i] > s1[i+1]) {
+				c = s1[i];
+				s1[i] = s1[i+1];
+				s1[i+1] = c;
+				nChange++;
+			}
+
+			if (s2[i] > s2[i+1]) {
+				c = s2[i];
+				s2[i] = s2[i+1];
+				s2[i+1] = c;
+				nChange++;
+			}
+		}
+	} while (nChange > 0);
+
+}
+
+void setMsg (char *s1, char *s2, int isNotAnagram) {
+	char sNotAnagram[MAX_WORD]=" is not an anagram of ",
+             sAnagram[MAX_WORD]=" is an anagram of ";
+
+	if (isNotAnagram) {
+		x_strcat(s1,sNotAnagram,MAX_WORD);
+	} else {
+		x_strcat(s1,sAnagram,MAX_WORD);
+	}
+
+	x_strcat(s1,s2,MAX_WORD);
+
+}
+
+void x_strcat (char *dest, char *orig, int size) {
+	int iDestIndex=0,
+            iOrigIndex=0;
+
+	while ((iDestIndex < size) && (dest[iDestIndex] != NULL)) {
+		iDestIndex++;
+	}
+
+	while ((iDestIndex < size) && (orig[iOrigIndex] != NULL)) {
+		dest[iDestIndex] = orig[iOrigIndex];
+		iDestIndex++;
+		iOrigIndex++;
+	}
+
+	dest[iDestIndex] = NULL;
+
 }
