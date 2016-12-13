@@ -2,11 +2,10 @@
 #include <string>
 using std::string;
 
-#define FILTER dirty
-
 int main(int argc, char** argv)
 {
-	string sCol2="";
+	string sCol2="",
+	       sFilter="dirty";
 
 	int  iRowCount=0,
 	     iActualRow=0,
@@ -22,7 +21,7 @@ int main(int argc, char** argv)
 		std::cin >> iCol1;
 		std::cin >> sCol2;
 
-		if (sCol2 == "FILTER") {
+		if (sCol2 == sFilter) {
 			// compute dirty
 			iDirtySum += iCol1;
 		}
