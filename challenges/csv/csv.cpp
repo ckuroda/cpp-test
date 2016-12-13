@@ -2,75 +2,124 @@
 #include <algorithm>
 #include <sstream>
 #include <string>
+using std::string;
 #include <vector>
+
+#define MAX_FIELDS 5
+
 int main(int argc, char** argv)
 {
-	// declaracao de variaveis
-	FILE *fp,
-	     *fout;
-	char str[255],
-	     nextStr[255],
-	     fields[100][10][255],
-	     sOut[255];
+
+	string sRow = "",
+               sField = "",
+	       sNome = "",
+               sAge = "",
+               sCity = "",
+               sState = "",
+               sAux = "";
+
 	int  idField,
-	     nrTamStr,	     nrTamNextStr,
-	     nrLine;
-	
-	if (argc != 3) {
-		// parametros invalidos
-		printf("Erro de parametros.");
-		return -1;
-	} else {
-		// parametros ok
-		if ((fp=fopen(argv[1],"r"))==NULL || (fout=fopen(argv[2],"w"))==NULL) {
-			printf("Erro na abertura de arquivos.");
-			return -1;
-		} else {
-			// abre arquivo ok - le novo registro
-			fgets(str,255,fp);
-			try {
-				qtLines = atoi(str);
-			} catch (int e) {
-				cout << "Linha 1 invalida. Exception nr. " << e << '\n';
-				return -1;
-			}
-			nrLine=0;
-			// le registro a registro
-			while (!feof(fp) && (nrLine < qtLines)) {
-				fgets(str,255,fp);
-				idField=0;
-				// grava campos do registro em fields
-				do {
-					nextStr = strchr(str,',');
-					if (nextStr == NULL) {
-						fields[nrLine][idField] = str;
-					} else {
-						nrTamStr = strlen(str);
-						nrTamNextStr = strlen(nextStr);
-						strncpy(fields[nrLine][idField],str,nrTamStr-nrTamNextStr);
-						str=nextStr+1;
-						idField++;
-					}
-				} while (nextStr != NULL);
-				nrLine++;
-			}		
-			// gera saida registro a registro
-			for (i=0;i<nrLine;i++) {
-				// monta saida
-				strcat(sOut,fields[i][0]);
-				strcat(sOut," is ");
-				strcat(sOut,fields[i][4]);
-				strcat(sOut," years old and lives in ");
-				strcat(sOut,fields[i][2]);
-				strcat(sOut,", ");
-				strcat(sOut,fields[i][1]);
-				// grava saida
-				fputs(sOut,fout);
-			}
-			fclose(fp);
-			fclose(fout);
-			return 0;
-		}
+	     nrLine=0,
+             qtLines=0,
+             iRowIndex=0;
 		
-	}
+	// lines count
+	std::cin >> qtLines;
+
+	// file scan
+	while (nrLine < qtLines) {
+
+		// set new line
+		idField=0;
+		iRowIndex=0;
+		sNome = "";
+		sState = "";
+		sCity = "";
+		sAge = "";
+		sAux = "";
+
+		// row scan
+		while (idField < MAX_FIELDS) {
+
+			std::cin >> sRow;
+
+			if (sAux.length()) {
+				// field part recovery
+				sField = sAux;
+				sField += " ";
+				sAux = "";
+			} else {
+				sField = "";
+			}
+
+			// row scan 
+			for (iRowIndex=0;iRowIndex<sRow.length();iRowIndex++) {
+
+				if (sRow[iRowIndex] == ',') {
+
+					// word break point
+					switch (idField) {
+						case 0: // name second part
+							sNome = sField;
+
+							// set next field
+							sField = "";
+							idField++;
+							break;
+						case 1: // state
+							sState = sField;
+
+							// set next field
+							sField = "";
+							idField++;
+							break;
+						case 2: // city
+							sCity = sField;
+
+							// set next field
+							sField = "";
+							idField++;
+							break;
+						case 3: // country - ignore
+							// set next field
+							sField = "";
+							idField++;
+							break;
+					} // switch
+
+
+				} else {
+			
+					if (idField != 3) {
+						// word build
+						sField += sRow[iRowIndex];
+
+					}
+				} // if-else
+ 
+
+			} // for
+
+			if (idField == 4) {
+				// last field age
+				sAge = sField;
+
+				// set next field
+				idField++;
+
+				// set new line
+				nrLine++;
+			} else {
+				// space break point - backup field part
+				sAux = sField;
+			}
+
+		} // while row scan
+
+		// set line out
+		std::cout << sNome << " is " << sAge << " years old and lives in " << sCity << ", " << sState << "." << std::endl;
+
+	} // while file scan
+
+	return 0;
 }
