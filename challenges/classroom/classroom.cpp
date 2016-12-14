@@ -15,7 +15,6 @@ int main(int argc, char** argv)
                sName2;
 	int  iQuestionCount = 0,
 	     iQuestionId = 0,
-             iActualQuestion = 0,
              iQuestionLoopCount = 0,
 	     iQuestionLoopId = 0,
 	     iNameId = 0;
@@ -23,7 +22,7 @@ int main(int argc, char** argv)
 	// row 1
 	std::cin >> iQuestionCount;
 
-	while (iActualQuestion < iQuestionCount) {
+	while (iQuestionCount--) {
 
 		// question ID capture
 		std::cin >> iQuestionId;
@@ -65,7 +64,6 @@ int main(int argc, char** argv)
 		} // switch
 		
 		iQuestionLoopId = 0;
-		iActualQuestion++;
 
 	} // while
 }
