@@ -8,7 +8,6 @@ int main(int argc, char** argv)
 	       sFilter="dirty";
 
 	int  iRowCount=0,
-	     iActualRow=0,
              iCol1=0,
 	     iDirtySum=0;
 
@@ -16,7 +15,7 @@ int main(int argc, char** argv)
 	std::cin >> iRowCount;
 
 	// file scan
-	while (iActualRow < iRowCount) {
+	while (iRowCount--) {
 
 		std::cin >> iCol1;
 		std::cin >> sCol2;
@@ -25,9 +24,6 @@ int main(int argc, char** argv)
 			// compute dirty
 			iDirtySum += iCol1;
 		}
-
-		// next row
-		iActualRow++;
 
 	} // while file scan
 
