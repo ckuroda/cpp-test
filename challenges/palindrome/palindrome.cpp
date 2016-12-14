@@ -10,14 +10,13 @@ int main(int argc, char** argv)
 	string sWord,
 	       sMessage;
 
-	int  iRowCount,
-	     iActualRow=0;
+	int  iRowCount;
 
 	// row 1 - row count	
 	std::cin >> iRowCount;
 
 	// file scan
-	while (iActualRow < iRowCount) {
+	while (iRowCount--) {
 
 		std::cin >> sWord;
 
@@ -29,8 +28,6 @@ int main(int argc, char** argv)
 
 		// set out
 		std::cout << sWord << sMessage << std::endl;
-
-		iActualRow++;
 
 	} // while file scan
 
