@@ -20,6 +20,7 @@ int main(int argc, char** argv)
 	     iQuestionLoopId = 0,
 	     iNameId = 0;
 	
+	// row 1
 	std::cin >> iQuestionCount;
 
 	while (iActualQuestion < iQuestionCount) {
