@@ -2,41 +2,42 @@
 #include <algorithm>
 #include <string>
 
-#define OK 0
-#define MAX_WORD 80
+using namespace std;
 
-char *rowScan (char *s1, char *s2);
-void strSort (char *s1, char *s2, int nSize);
-void setMsg (char *s1, char *s2, int isNotAnagram);
-void x_strcat (char *dest, char *orig, int size);
+#define OK 0
+
+int isAnagram (string s1, string s2);
+int isSimilar (string s1, string s2);
 
 int main(int argc, char** argv)
 {
-	char sRow1[MAX_WORD],
-             sRow2[MAX_WORD],
-             *sReturn;
-	int  nRows = 0,
-	     nActualRow = 0;
+	string sRow1,
+               sRow2,
+	       sReturn;
+
+	int  nRows = 0;
 	
-	// open file ok
-	std::cin >> sRow1;
-	// row 1
-	try {
-		nRows = atoi(sRow1);
-	} catch (int e) {
-		// Erro na leitura do nro de linhas
-		return e;
-	}
+	// Row 1
+	std::cin >> nRows;
 
 	// file scan
-	while ((nActualRow < nRows)) {
+	while (nRows--) {
+
 		// row scan
 		std::cin >> sRow1;
 		std::cin >> sRow2;
-		nActualRow++;
 
-		// row rules
-		sReturn = rowScan(sRow1,sRow2);
+		sReturn = sRow1;
+
+		// anagram check
+		if ( isAnagram(sRow1,sRow2) ) {
+			sReturn += " is an anagram of ";
+		} else {
+			sReturn += " is not an anagram of ";
+		}
+
+		//set message
+		sReturn += sRow2;
 
 		// set output
 		std::cout << sReturn << std::endl;								
@@ -45,41 +46,41 @@ int main(int argc, char** argv)
 	return OK;
 }
 
-char *rowScan (char *s1, char *s2) {
+int isAnagram (string s1, string s2) {
 	// vars
-	int  idCmp;
-	char sTmp1[MAX_WORD]="",
-             sTmp2[MAX_WORD]="";
+	string sTmp1,
+               sTmp2;
+	int    iResult = 0;
 
-	if (strlen(s1) == strlen(s2)) {
+	if (s1.length() == s2.length()) {
 		// same words size
-		x_strcat(sTmp1,s1,MAX_WORD);
-		x_strcat(sTmp2,s2,MAX_WORD);
+		sTmp1 = s1;
+		sTmp2 = s2;
 
 		// sort words
-		strSort(sTmp1,sTmp2,(int) strlen(sTmp1));
+		iResult = isSimilar(sTmp1,sTmp2);
 		
 		// singular word check
-		idCmp = strcmp(sTmp1,sTmp2);
+		return iResult;
 		
 	} else {
 		// negative anagram
-		idCmp = 1;
+		return 0;
 	}
 
-	setMsg(s1,s2,idCmp);
-	return s1;
 }
 
-void strSort (char *s1, char *s2, int nSize) {
+int isSimilar (string s1, string s2) {
 	// vars
 	int nChange = 0;
+        size_t nSize = 0;
 	char c;
 
+	nSize = s1.length();
 	do {
 		nChange = 0;
-		// word1 and word2 scan
-		for (int i=0;i<nSize-1;i++) {
+		// word scan
+		for (size_t i=0;i<nSize-1;i++) {
 
 			if (s1[i] > s1[i+1]) {
 				c = s1[i];
@@ -97,36 +98,6 @@ void strSort (char *s1, char *s2, int nSize) {
 		}
 	} while (nChange > 0);
 
-}
-
-void setMsg (char *s1, char *s2, int isNotAnagram) {
-	char sNotAnagram[MAX_WORD]=" is not an anagram of ",
-             sAnagram[MAX_WORD]=" is an anagram of ";
-
-	if (isNotAnagram) {
-		x_strcat(s1,sNotAnagram,MAX_WORD);
-	} else {
-		x_strcat(s1,sAnagram,MAX_WORD);
-	}
-
-	x_strcat(s1,s2,MAX_WORD);
-
-}
-
-void x_strcat (char *dest, char *orig, int size) {
-	int iDestIndex=0,
-            iOrigIndex=0;
-
-	while ((iDestIndex < size) && (dest[iDestIndex] != NULL)) {
-		iDestIndex++;
-	}
-
-	while ((iDestIndex < size) && (orig[iOrigIndex] != NULL)) {
-		dest[iDestIndex] = orig[iOrigIndex];
-		iDestIndex++;
-		iOrigIndex++;
-	}
-
-	dest[iDestIndex] = NULL;
+	return (s1 == s2);
 
 }
